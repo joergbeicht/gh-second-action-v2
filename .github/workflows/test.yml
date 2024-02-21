@@ -2,8 +2,9 @@ name: Test Project
 # on definiert das Event welches den Workflow triggert
 # workflow_dispatch ist ein spezielle Event das auf eine Benutzer-Eingabe wartet
 # on ist der Trigger. Man sagt definiere den Trigger
-# push ist der Trigger wann immer ein push ins Repository erfolgt
-on: push
+# on: push ist ein signle Trigger wann immer ein push ins Repository erfolgt
+# on: [push, workflow_dispatch] ist ein multiple Trigger
+on: [push, workflow_dispatch]
 # jobs sagt was zu tun ist
 jobs:
   # First Job with name test da Tests ausgeführt werden
@@ -49,6 +50,7 @@ jobs:
   deploy:
     # sorgt für sequentielles ausführen der Jobs
     # deploy wartet auf test
+    # mit needs wird das parallele standard ausführen der jobs aus sequentielles geändert
     needs: test
     runs-on: ubuntu-latest
     steps:
