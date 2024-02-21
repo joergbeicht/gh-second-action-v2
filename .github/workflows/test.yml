@@ -47,6 +47,9 @@ jobs:
   # Seceond Job with name deploy, da auf Ziel-System ausgeliefert wird    
   # Vieles ist identisch wir beim vorherigen Job test bis zu run: npm ci
   deploy:
+    # sorgt für sequentielles ausführen der Jobs
+    # deploy wartet auf test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get code - download code to repository
@@ -57,7 +60,7 @@ jobs:
           node-version: 18
       - name: Install NodeJS
         run: npm ci
-      # Jetzt können die eigentliche Tests ausgeführt werden,
+      # Jetzt können die eigentlichen Tests ausgeführt werden,
       # was das eigentlich Ziel dieses Workflow ist
       - name: Build Project
         run: npm run build
