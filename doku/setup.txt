@@ -1,0 +1,19 @@
+>: nvm use 16.15.0
+>: npm install
+>: npm run dev
+>: npm test
+
+Neue App mit Git verbinden
+- Zuerst die loacal App erstellen und ein locales git erstellen mit einem init commit
+>: git add .
+>: git commit -m "initial commit"
+
+- Jetzt in Git eine Remote Repository erstellen
+  Dann
+
+ACHTUNG: joergbeicht@ nicht vergessen joergbeicht ist der GitHub user
+         Das @ trennt user und pfad
+>: git remote add origin https://joergbeicht@github.com/joergbeicht/gh-second-action-v2.git
+>: git push => falls git push --set-upstream origin main angezeigt wird. Dann ausführen
+>: git push --set-upstream origin main
+>: wenn das nicht funktioniert dann das Repo clonen und den git Ordner austauschen :-)
