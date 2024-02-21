@@ -1,0 +1,45 @@
+name: Test Project
+# on definiert das Event welches den Workflow triggert
+# workflow_dispatch ist ein spezielle Event das auf eine Benutzer-Eingabe wartet
+# on ist der Trigger. Man sagt definiere den Trigger
+# push ist der Trigger wann immer ein push ins Repository erfolgt
+on: push
+# jobs sagt was zu tun ist
+jobs:
+  # kannst du nennen wie du willst
+  test:
+    # runs-on definert den runner, also die notwendige Umgebung
+    # siehe https://docs.github.com/de/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners
+    # 
+    runs-on: ubuntu-latest
+    # stepa 1 von n eines job. Jeder - entspricht eine step. - name ist z.B. ein step
+    steps:
+      # name gibt das in der Console aus
+      - name: Get code - download code to repository
+      # run oder uses -> Das ist die eigentliche Action
+      # Man kann shell commands oder komplexe Scripte ausführen
+      # https://github.com/marketplace?type=actions
+      # In diesem Beispiel nutzen wir die checkout Action
+      # Die uses Syntax findest du indem du nach chechout suchst
+      # oder direkt hier https://github.com/marketplace/actions/checkout
+      # Diese Action zieht das GitHub Repositiory in ubuntu
+        uses: actions/checkout@v3
+      # Mit der Action zuvor ist jetzt das Project da
+      # Als nächstes wird nodejs benötigt
+      # Suche in https://github.com/marketplace?type=actions nach node setup
+      # oder direkt auf #https://github.com/marketplace/actions/setup-node-js-environment
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        # with konfiguriert die action. Hier im Beispiel actions/checkout@v3
+        with:
+          node-version: 18
+      # Jetzt benötigen wir die Dependencies
+      - name: Install NodeJS
+        # Einfach das shell-command nutzen. wir können npn install benutzen
+        # oder npm ci das ist noch sicherer, da dies auf package.log geht
+        # so verhindern wir den Bau einer braking Version.
+        run: npm ci
+      # Jetzt können die eigentliche Tests ausgeführt werden,
+      # was das eigentlich Ziel dieses Workflow ist
+      - name: Run Tests
+        run: npm test
