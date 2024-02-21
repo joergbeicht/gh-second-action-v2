@@ -6,6 +6,7 @@ name: Test Project
 on: push
 # jobs sagt was zu tun ist
 jobs:
+  # First Job with name test da Tests ausgeführt werden
   # kannst du nennen wie du willst
   test:
     # runs-on definert den runner, also die notwendige Umgebung
@@ -43,3 +44,23 @@ jobs:
       # was das eigentlich Ziel dieses Workflow ist
       - name: Run Tests
         run: npm test
+  # Seceond Job with name deploy, da auf Ziel-System ausgeliefert wird    
+  # Vieles ist identisch wir beim vorherigen Job test bis zu run: npm ci
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code - download code to repository
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install NodeJS
+        run: npm ci
+      # Jetzt können die eigentliche Tests ausgeführt werden,
+      # was das eigentlich Ziel dieses Workflow ist
+      - name: Build Project
+        run: npm run build
+      - name: Deploy bzw. Upload to Webserver
+        run: echo "Deploy "
+        
