@@ -1,0 +1,16 @@
+name: Output information
+# Event bedeutet kann nur manuell gestartet werden.
+# In Github Actions ist ein Button für den Workflow zu starten
+on: workflow_dispatch
+jobs:
+  # Jobname ist info
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output GitHub context
+        # Nutze GitHub context für info Ausgaben
+        # Context Ausgaben macht man mit ${{ }}
+        # Für die Ausgabe werde Identifier benutzt hier z.B. github
+        # Access auf Metadata die von GitHub bereitgestellt werden
+        # https://docs.github.com/en/actions/learn-github-actions/contexts
+        run: echo "${{ toJSON(github) }}"
